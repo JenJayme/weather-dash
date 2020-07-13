@@ -1,0 +1,12 @@
+.data {
+    font-weight: bold;
+}
+
+.navbar {
+    background-color: mediumvioletred;
+}
+
+.weather-condition-sunny:after { 
+    content: "\e<weather.icon>"; 
+}
+/* weather.icon is the 3- to 4-digit value - look these up */
