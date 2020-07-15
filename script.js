@@ -40,7 +40,8 @@ const forecastQueryURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8
 const testIcon = "https://www.weatherbit.io/static/img/icons/c01d.png";
 const iconHub = "https://www.weatherbit.io/static/img/icons/";
 
-var todayWeatherObj = {};  
+var todayWeatherObj = {};
+var forecastWeatherArr = [];
 
 function weatherNow() {
     $.ajax({
@@ -56,7 +57,7 @@ function weatherNow() {
         todayWeatherObj.currentUV = $("#current-uv").text(response.data[0].uv);
         // todayWeatherObj.iconCode = $("#icon").text(response.data[0].weather.icon);
         todayWeatherObj.iconCode = response.data[0].weather.icon;
-        todayWeatherObj.description = $("#today-description").text(response.data[0].weather.description);
+        todayWeatherObj.description = $("#today-weather-description").text(response.data[0].weather.description);
     });
 };
 
@@ -68,7 +69,7 @@ function appendIcon(iconCode) {
     console.log(iconHub);
     console.log(iconSrc);
 }
-        // var icon = $("#icon").append('<img src="https://www.weatherbit.io/static/img/icons/c01d.png' />);
+// var icon = $("#icon").append('<img src="https://www.weatherbit.io/static/img/icons/c01d.png' />);
 
 function weatherForecast() {
     $.ajax({
@@ -76,40 +77,23 @@ function weatherForecast() {
         method: "GET"
     }).then(function (response) {
         var div, date, dateCol, dl, dd;
-        for (var i = 0; i < response.data.length; i++) {
-            console.log(response.data[i]);
+        let currentData;
+        let numOfDays = response.data.length;
 
-            // console.log(response.data[i].datetime)
-            date = (moment(response.data[i].datetime).format('MMMM DD'));        
+        for (var i = 0; i < numOfDays; i++) {
+            currentData = response.data[i];
+            date = (moment(currentData.datetime).format('MMMM DD'));
 
-            div = $("#forecast-div").append("<div>");
-            // div = $('<div></div>');
-            div.addClass("col-2");
-            div.append("<dl>");
-
-            div = $("#forecast-div").append("<div>").addClass("col-2");
-            dateCol = $("dl").append("<dt>"+ date +"</dt>")
-            // date = $("#date-my").text(moment().format('MM DD')
-            
-            $("dl").append("<dd>"+response.data[i].rh+"</dd>");
-            $("dl").append("<dd>"+response.data[i].weather.description+"</dd>");
-            
-            // $("dd").append("<dd>").text(response.data[i].rh)
-            $("#fore-date").text(response.data[i].datetime);
-            $("#fore-icon").text(response.data[i].weather.icon);
-            // dl = $("dl").append("<dd>list item</dd>");
-            // .text(response.data[i].datetime);
+            $("#forecast-div").append(`<div class="col-2">
+            <h4>${date}</h4>
+            <div>${currentData.weather.icon}</div>
+            <div>${currentData.min_temp}</div>
+            <div>${currentData.max_temp}</div>
+            <div>${currentData.rh}</div>
+            </div>`);
         }
     });
 }
-
-        // Create Question div
-        // div = $('<div></div>');
-        // div.addClass('question');
-        // div.text(QNAObject.question);
-        // questionsContainer.append(div);
-
-//==============================================================
 
 //push searched cities to searchHistory
 function pushCitiesToArray() {
