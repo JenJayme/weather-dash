@@ -1,17 +1,6 @@
-// GIVEN a weather dashboard with form inputs
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
-// WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-// WHEN I view the UV index
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-// WHEN I view future weather conditions for that city
-// THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-// WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city
 
 var searchHistory = [];
-var fiveDayData = [];
+var forecastData = [];
 var weatherToday = {};
 //API requests
 //sample forecast 16-day https://api.weatherbit.io/v2.0/forecast/daily?city=Raleigh,NC&key=API_KEY
@@ -83,14 +72,15 @@ function weatherForecast() {
         for (var i = 0; i < numOfDays; i++) {
             currentData = response.data[i];
             date = (moment(currentData.datetime).format('MMMM DD'));
+            iconSrc = (iconHub + currentData.weather.icon + ".png");
 
-            $("#forecast-div").append(`<div class="col-2">
-            <h4>${date}</h4>
-            <div>${currentData.weather.icon}</div>
-            <div>${currentData.min_temp}</div>
-            <div>${currentData.max_temp}</div>
-            <div>${currentData.rh}</div>
-            </div>`);
+            $("#forecast-div").append(`<div class="col-2"><div class="card" style="width: 100%">
+            <div class="card-body"><img src=${iconSrc} class="card-img-top">
+            <h4 class="card-title text-center">${date}</h4>
+            <div class="text-center">${currentData.min_temp}</div>
+            <div class="text-center">${currentData.max_temp}</div>
+            <div class="text-center">${currentData.rh}</div>
+            </div></div></div>`);
         }
     });
 }
