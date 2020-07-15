@@ -52,12 +52,11 @@
             </div>
             <div class="col-9">
                 <div class="row">
-                    <div>
-                        <h4 class="pl-3 pb-2">Current Weather in</h4>
-                        <h1 class="pl-3 pb-2">
-                            <span class="data" id="city-state">City, State</span>
-                            <span class="data" id="date" style="font-style: italic; color: limegreen">Date</span>
-                            <img id="icon" src="">Icon</span></h1>
+                    <h4 class="pl-3 pb-2">Current Weather in</h4>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <h3 class="pl-3 pb-2 data" id="city-state">City, State</h3>
                         <ul>
                             <dd>Temperature:
                                 <span id="current-temp" class="font-weight-bold"></span></dd>
@@ -71,18 +70,33 @@
                                 <span id="current-uv" class="font-weight-bold"></span></dd>
                         </ul>
                     </div>
+                    <div class="col-3">
+                        <h3 class="pl-3 pb-2 data" id="icon">
+                            <img src="https://www.weatherbit.io/static/img/icons/c01d.png"></h3>
+                        <h5 id="today-weather-description" class="text-center font-italic">sunny(test)</h5>
+                    </div>
+                    <div class="col-3">
+                        <h3 class="pl-3 pb-2"><span class="data" id="date" style="font-style: italic; color: teal">Date</span></h3>
+                    </div>
                 </div>
-                <div class="row">
-                    <h2>5-Day Forecast</h2>
+                <div class="row mx-2">
+                    <div class="col-10" style="background-color: teal">
+                        <h3>5-Day Forecast</h3>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-2">column</div>
-                    <div class="col-2">column</div>
-                    <div class="col-2">column</div>
-                    <div class="col-2">column</div>
-                    <div class="col-2">column</div>
-                </div>
+                <div class="row pt-3">
+                    <div class="col-2">
+                        <dl class="list-group" id="forecast-div">
+                            <!-- <h5 class="card-title" id="fore-date">Date</h5>
+                            <li class="list-group-item" id="fore-description">Description</li>
+                            <li class="list-group-item" id="fore-icon"><i class="weather-condition-sunny">Icon</i></li>
+                            <li class="list-group-item" id="fore-min-temp">Min Temperature</li>
+                            <li class="list-group-item" id="fore-max-temp">Max Temperature</li>
+                            <li class="list-group-item" id="fore-humidity">Humidity</li> -->
+                            </ul>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -97,6 +111,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
 
 </body>
