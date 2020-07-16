@@ -1,8 +1,67 @@
-.navbar {
-    background-color: mediumvioletred;
+body {
+    background-color: #E4DFDA;
 }
 
-.weather-condition-sunny:after { 
-    content: "\e<weather.icon>"; 
+.bkg-blue {
+    background-color: #4281A4;
+    color: white;
+    padding: 10px;
+    margin: 10px;
 }
-/* weather.icon is the 3- to 4-digit value - look these up */
+#forecast-div {
+    margin-left: 1px;
+}
+
+.section-head {
+    background-color: #D4B483;
+    color: #4281A4;
+    margin-left: 10px;
+}
+
+.navbar {
+    background-color: #c71585;
+}
+
+.navbar-brand {
+    padding: 15px;
+    font-size: 32px;
+}
+
+.searchbox {
+    background-color: #48A9A6;
+}
+
+#search-label {
+    padding: 6px;
+    color: #E4DFDA;
+}
+
+.uv-low {
+    background-color: green;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.uv-mod-lo {
+    background-color: yellow;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.uv-mod-hi {
+    background-color: orange;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.uv-severe-lo {
+    background-color: red;
+    color: white;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.uv-severe-hi {
+    background-color: purple;
+    padding: 6px;
+}
