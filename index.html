@@ -52,12 +52,16 @@
                 </ul>
             </div>
             <div class="col-9">
-                <div class="row">
-                    <h4 class="ml-4 bkg-blue">Current Weather</h4>
+                <div class="row" id="banner-img">
+                    <div class="col-4">
+                        <h3>Current Weather
+                    </div>
+                    <div class="col" id="date">Date</div>
+                    <div class="col" id="city-state"><span id="city">City</span>, <span id="state">State</span><br>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-4">
-                        <h3 class="pl-3 pb-2 section-head" id="city-state">City, State</h3>
+                    <div class="col-4" id="today-stats">
                         <ul>
                             <dd>Temperature:
                                 <span id="current-temp" class="font-weight-bold"></span></dd>
@@ -72,12 +76,13 @@
                         </ul>
                     </div>
                     <div class="col-3">
-                        <h3 class="pl-3 pb-2 data text-center" id="icon">
-                            <h5 id="today-weather-description" class="text-center font-italic">description</h5>
+                        <h4 id="icon"><br>
+                            <span id="today-weather-description" class="text-center font-italic">description</span></h4>
                     </div>
                     <div class="col-3">
-                        <h3 class="pl-3 pb-2 text-right"><span class="section-head" id="date"
-                                style="font-style: italic; color: teal">Date</span></h3>
+                        <p class="uv-desc">The UV Index scale used in the U.S. conforms with guidelines for UVI reporting established by the World Health Organization. For more information visit <a
+                                href="https://www.epa.gov/sunsafety/uv-index-scale-0">the EPA's UV Index page.</a></p>
+                        <img src="Assets/uviscaleh_lg.gif" class="img-fluid" />
                     </div>
                 </div>
                 <div class="row">
@@ -105,5 +110,13 @@
     <script type="text/javascript" src="script.js"></script>
 
 </body>
+<footer>
+    <div class="footer-copyright">
+        <div class="container">
+            Lake Tahoe photo by <a href="https://pixabay.com/users/lhs_333333-4675054/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3244609">lhs_333333</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3244609">Pixabay</a>
+
+        </div>
+    </div>
+</footer>
 
 </html>
