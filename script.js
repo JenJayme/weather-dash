@@ -6,36 +6,29 @@ var forecastWeatherArr = [];
 var city = "Novato";
 var state = "CA";
 var cityState = city + "," + state;
-var today = (moment().format('dddd, MMMM Do, YYYY'));
-var d = moment().day()
-console.log("Day = "+d);
+var today = (moment().format('ddd, MMMM DD, YYYY'));
 
 //========================================================
 
-function getUserInputs() {
-    var locationObj;
-    searchCity = $('#city').val()
-    searchState = $('#startNum').val();
+const searchBar = document.getElementById("searchBar");
 
-    locationObj = {
-        searchCity: searchCity,
-        searchState: searchState,
-    };
+// function setup () {
+    //event listener for search button
+    // searchBar.addEventListener("keyup", e => {
+        // let searchInput = e.target.value;
+    // console.log("button is clicked")
+//   });
+// }
 
-    searchHistory.push(locationObj);
-    return locationObj;
+function getUserInputs(searchInput) {
+    searchInput = $('#search-input').val();
+    return searchInput;
 }
 
-//push searched cities to searchHistory
-// function pushCitiesToArray(searchHistory) {
-//     searchHistory.push(city1);
-//     searchHistory.push(city2);
-//     searchHistory.push(city3);
-// };
-
 //saves the search history to local storage
-function saveToLocalStorage(item) {
-    localStorage.setItem(LS_KEY, JSON.stringify(item));
+function saveSearchHistory(searchInput) {
+    searchHistory.push(searchInput);
+    localStorage.setItem(LS_KEY, JSON.stringify(searchInput));
 };
 
 //reads the search history from local storage
@@ -76,12 +69,12 @@ function weatherNow() {
     }).then(function (response) {
         todayWeatherObj.location = $("#city-state").text(cityState);
         todayWeatherObj.date = $("#date").text(today);
-        todayWeatherObj.currentTemp = $("#current-temp").text(response.data[0].app_temp+'°F');
-        todayWeatherObj.currentHumidity = $("#current-humidity").text(response.data[0].rh+'%');
-        todayWeatherObj.currentWindSpeed = $("#current-wind-speed").text(response.data[0].wind_spd+'mph');
+        todayWeatherObj.currentTemp = $("#current-temp").text(response.data[0].app_temp + '°F');
+        todayWeatherObj.currentHumidity = $("#current-humidity").text(response.data[0].rh + '%');
+        todayWeatherObj.currentWindSpeed = $("#current-wind-speed").text(response.data[0].wind_spd + 'mph');
         todayWeatherObj.currentWindDirection = $("#current-wind-direction").text(response.data[0].wind_cdir_full);
         todayWeatherObj.currentUV = $("#current-uv").text(response.data[0].uv);
-        todayWeatherObj.iconCode = $("#icon").append(`<img src=`+iconHub+response.data[0].weather.icon+`.png/>`);
+        todayWeatherObj.iconCode = $("#icon").append(`<img src=` + iconHub + response.data[0].weather.icon + `.png/>`);
         todayWeatherObj.description = $("#today-weather-description").text(response.data[0].weather.description);
         iconCode = todayWeatherObj.iconCode;
         uvColor(todayWeatherObj.currentUV);
@@ -91,17 +84,19 @@ function weatherNow() {
 //========================================================
 
 function uvColor(uv) {
-    console.log("uv is "+uv)
+    console.log("uv is " + uv)
     if (uv < 3) {
         $('#current-uv').addClass('uv-low') //green
     } else if (uv > 2 && uv < 6) {
         $('#current-uv').addClass('uv-mod-lo') //yellow
     } else if (uv > 5 && uv < 8) {
         $('#current-uv').addClass('uv-mod-hi') //orange   
-    } else if (uv >7 && uv < 10) {
+    } else if (uv > 7 && uv < 10) {
         $('#current-uv').addClass('uv-severe-lo') //red
+    } else if (uv > 9) {
+        $('#current-uv').addClass('uv-severe-hi') //purple
     } else {
-        $('#current-uv').addClass('uv-severe-hi') //red
+        $('#current-uv').addClass('uv-low') //green
     }
 }
 
@@ -118,16 +113,16 @@ function weatherForecast() {
 
         for (var i = 0; i < numOfDays; i++) {
             currentData = response.data[i];
-            date = (moment(currentData.datetime).format('MMMM DD'));
+            date = (moment(currentData.datetime).format('ddd MMMM Do'));
             // day = (moment().day('DD'));
             iconSrc = (iconHub + currentData.weather.icon + ".png");
 
             $("#forecast-div").append(`<div class="col-2"><div class="card" style="width: 100%">
             <div class="card-body"><img src=${iconSrc} class="card-img-top" />
             <h4 class="card-title text-center">${date}</h4>
-            <div class="text-center">Low: ${currentData.min_temp}</div>
-            <div class="text-center">High: ${currentData.max_temp}</div>
-            <div class="text-center">Humidity: ${currentData.rh}</div>
+            <div class="text-center">Low: ${currentData.min_temp}°F</div>
+            <div class="text-center">High: ${currentData.max_temp}°F</div>
+            <div class="text-center">Humidity: ${currentData.rh}%</div>
             </div></div></div>`);
         }
     });
@@ -136,8 +131,9 @@ function weatherForecast() {
 //========================================================
 
 $(document).ready(function () {
-
+    // setup();
     weatherNow();
     weatherForecast(5);
-
+    // getUserInputs();
+    // console.log(searchHistory);
 });
