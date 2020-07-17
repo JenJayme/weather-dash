@@ -1,59 +1,68 @@
 //========================================================
 
 var searchHistory = [];
+var searchInput = '';
 var todayWeatherObj = {};
 var forecastWeatherArr = [];
-var city = "Novato";
-var state = "CA";
-var cityState = city + "," + state;
+var cityState;
 var today = (moment().format('ddd, MMMM DD, YYYY'));
 
 //========================================================
 
 const searchBar = document.getElementById("searchBar");
 
-function setup () {
+function setup() {
     //event listener for search button
+    $("#searchBtn").on("click", function () {
+        // debugger;
+        console.log("You clicked a button!");
 
+        //gets user input and saves to an object
+        // var searchInput = {
+        //   city: $("#searchBarCity").val().trim(),
+        //   state: $("#searchBarState").val().trim(),
+        // };
 
-$("#search-Btn").on("click", function(event) {
-    event.preventDefault();
-    console.log("You clicked a button!")
-
-    var searchInput = {
-      city: $("#name").val().trim(),
-      state: $("#role").val().trim(),
-    };
-
-    // Question: What does this code do??
-    $searchHistory.push(searchInput)
-      .then(function(data) {
-        console.log(data);
-      });
-
-  });
+        //pushes location object into searchHistory array
+        // searchHistory.push(searchInput)
+        getWeatherData();
+    });
 }
 
-
-
-function getUserInputs(searchInput) {
-    searchInput = $('#search-input').val();
-    return searchInput;
+function getUserInputs() {
+    let city = $('#searchBarCity').val() || 'Novato';
+    let state = $('#searchBarState').val() || 'CA';
+    cityState = city + "," + state;
+    console.log("You're searching for weather in " + cityState);
+    saveSearchHistory(cityState);
+    return cityState;
 }
+
 
 //saves the search history to local storage
 function saveSearchHistory(searchInput) {
     searchHistory.push(searchInput);
-    localStorage.setItem(LS_KEY, JSON.stringify(searchInput));
-};
+    localStorage.setItem(LS_KEY, JSON.stringify(searchHistory));
+}
 
 //reads the search history from local storage
-function loadFromLocalStorage(item) {
-    item = JSON.parse(localStorage.getItem(LS_KEY))
-};
-
+function loadFromLocalStorage() {
+    searchHistory = JSON.parse(localStorage.getItem(LS_KEY));
+}
 
 // console.log(locationObj);
+
+//========================================================
+//FRED'S REWRITE
+// function getUserInputs(searchInput) {
+//     let cityInput = $('#searchBarCity').val() || 'Novato';
+//     let stateInput = $('#searchBarState').val() || 'CA';
+//     let searchInput;
+//     searchInput = cityInput + "," + stateInput;
+//     saveSearchHistory(searchInput);
+//     return searchInput;
+// }
+
 
 //========================================================
 
@@ -65,12 +74,11 @@ function loadFromLocalStorage(item) {
 const API_KEY = "314f8e60676745089873728b30174cc3";
 const LS_KEY = "sunnyday";
 const wbEndPt = "http://api.weatherbit.io/v2.0/";
+
 const paramsCurrent = "current" + "?key=" + API_KEY + "&city=" + cityState;
 const paramsForecast = "forecast/daily" + "?key=" + API_KEY + "&units=i&city=" + cityState + "&days=5";
-
 const testURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8e60676745089873728b30174cc3&units=i&city=Novato, CA&days=5";
 const weatherNowQueryURL = "http://api.weatherbit.io/v2.0/current" + "?key=" + API_KEY + "&city=" + cityState;
-const forecastQueryURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8e60676745089873728b30174cc3&units=i&city=Novato, CA&days=5";
 const testIcon = "https://www.weatherbit.io/static/img/icons/c01d.png";
 const iconHub = "https://www.weatherbit.io/static/img/icons/";
 var iconSrc;
@@ -78,12 +86,14 @@ var iconCode;
 
 //========================================================
 
-function weatherNow() {
+function weatherNow(endpturl, loc) {
+    var cityHead = loc;
     $.ajax({
-        url: weatherNowQueryURL,
+        url: endpturl,
         method: "GET"
     }).then(function (response) {
-        todayWeatherObj.location = $("#city-state").text(cityState);
+        debugger;
+        todayWeatherObj.location = $("#cityState").text(cityHead);
         todayWeatherObj.date = $("#date").text(today);
         todayWeatherObj.currentTemp = $("#current-temp").text(response.data[0].app_temp + '°F');
         todayWeatherObj.currentHumidity = $("#current-humidity").text(response.data[0].rh + '%');
@@ -96,6 +106,27 @@ function weatherNow() {
         uvColor(todayWeatherObj.currentUV);
     });
 };
+
+//====================================================================
+
+function getWeatherData() {
+    var paramsCurrent = "current" + "?key=" + API_KEY + "&city=";
+    var url = wbEndPt;
+    cityState = getUserInputs();
+    paramsCurrent += cityState;
+    url += paramsCurrent;
+    weatherNow(url, cityState);
+    getForecastData();
+}
+
+function getForecastData() {
+    var paramsCurrent = "forecast/daily" + "?key=" + API_KEY + "&units=i&city="+ cityState + "&days=5";
+    var url = wbEndPt;
+    url += paramsCurrent;
+    weatherForecast(url);
+    // const forecastQueryURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8e60676745089873728b30174cc3&units=i&city=Novato, CA&days=5";
+}
+//====================================================================
 
 //========================================================
 
@@ -118,9 +149,9 @@ function uvColor(uv) {
 
 //========================================================
 
-function weatherForecast() {
+function weatherForecast(endpturl) {
     $.ajax({
-        url: forecastQueryURL,
+        url: endpturl,
         method: "GET"
     }).then(function (response) {
         var date;
@@ -146,10 +177,7 @@ function weatherForecast() {
 
 //========================================================
 
-$(document).ready(function () {
+// $(document).ready(function () {
     setup();
-    weatherNow();
-    weatherForecast(5);
-    // getUserInputs();
-    // console.log(searchHistory);
-})
+    getWeatherData();
+// })

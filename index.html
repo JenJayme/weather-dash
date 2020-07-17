@@ -49,23 +49,22 @@
 
             <!--LEFT COLUMN W SEARCH BAR-->
             <div class="col-3 searchbox">
-                <div>
-                    <h4 id="search-label">Search for a city:</h4>
+                <h4 id="search-label">Search for a city:</h4>
+                <form class="form-inline">
                     <div class="form-group form-row">
-                        <form class="form-inline">
-                            <div class="form-col">
-                                <label class="sr-only" for="search-bar-city">City</label>
-                                <input type="text" class="form-control mr-sm-1" id="search-bar-city"
-                                    placeholder="Search for City">
-                            </div>
-                            <div class="form-col">
-                                <label class="sr-only" for="search-bar-state">State</label>
-                                <input type="text" class="form-control" id="search-bar-state" placeholder="State">
-                            </div>
+                        <div class="form-col">
+                            <label class="sr-only" for="searchBarCity">City</label>
+                            <input type="text" class="form-control mr-sm-1" id="searchBarCity"
+                                placeholder="Search for City">
+                        </div>
+                        <div class="form-col">
+                            <label class="sr-only" for="searchBarState">State</label>
+                            <input type="text" class="form-control" id="searchBarState" placeholder="State">
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-col">
-                            <button type="submit" class="search-Btn btn btn-primary mb-3">Search</button>
+                            <button type="submit" id="searchBtn" class="btn btn-primary mb-3">Search</button>
                         </div>
                         <div class="form-col">
                             <div class="form-check mb-2 mr-sm-2">
@@ -76,7 +75,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 </form>
 
                 <!--REMEMBERED CITIES LISTBOX-->
@@ -97,7 +95,7 @@
                         <h3>Current Weather
                     </div>
                     <div class="col" id="date">Date</div>
-                    <div class="col city-state" id="city-state">City. State<br>
+                    <div class="col city-state" id="cityState">City. State<br>
                     </div>
                 </div>
                 <div class="row">
