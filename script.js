@@ -12,13 +12,29 @@ var today = (moment().format('ddd, MMMM DD, YYYY'));
 
 const searchBar = document.getElementById("searchBar");
 
-// function setup () {
+function setup () {
     //event listener for search button
-    // searchBar.addEventListener("keyup", e => {
-        // let searchInput = e.target.value;
-    // console.log("button is clicked")
-//   });
-// }
+
+
+$("#search-Btn").on("click", function(event) {
+    event.preventDefault();
+    console.log("You clicked a button!")
+
+    var searchInput = {
+      city: $("#name").val().trim(),
+      state: $("#role").val().trim(),
+    };
+
+    // Question: What does this code do??
+    $searchHistory.push(searchInput)
+      .then(function(data) {
+        console.log(data);
+      });
+
+  });
+}
+
+
 
 function getUserInputs(searchInput) {
     searchInput = $('#search-input').val();
@@ -131,9 +147,9 @@ function weatherForecast() {
 //========================================================
 
 $(document).ready(function () {
-    // setup();
+    setup();
     weatherNow();
     weatherForecast(5);
     // getUserInputs();
     // console.log(searchHistory);
-});
+})

@@ -97,12 +97,20 @@ footer {
     font-size: 32px;
 }
 
+#remember-check {
+    width: 20px;
+}
+
 .searchbox {
     background-color: #48A9A6;
     background-image: url("Assets/tahoe.jpg");
     background-repeat: no-repeat;
     display: inline-block;
     float: left;
+}
+
+#search-bar-state {
+    width: 50px;
 }
 
 #search-label {
