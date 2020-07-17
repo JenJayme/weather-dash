@@ -14,19 +14,9 @@ var today = (moment().format('ddd, MMMM DD, YYYY'));
 function setup() {
     //event listener for search button
     $("#searchBtn").on("click", function (e) {
-        // debugger;
         e.preventDefault();
         console.log("You clicked a button!");
-
-        //gets user input and saves to an object
-        // var searchInput = {
-        //   city: $("#searchBarCity").val().trim(),
-        //   state: $("#searchBarState").val().trim(),
-        // };
-
-        //pushes location object into searchHistory array
-        // searchHistory.push(searchInput)
-        getWeatherData();
+        getWeatherData().then(addToCityList());
     });
 }
 
@@ -45,16 +35,13 @@ function saveSearchHistory(searchInput) {
     localStorage.setItem(LS_KEY, JSON.stringify(searchHistory));
 }
 
-//reads the search history from local storage
-// function loadFromLocalStorage() {
-//     searchHistory = JSON.parse(localStorage.getItem(LS_KEY));
-// }
-
-function addToCityList () {
-    searchHistory = JSON.parse(localStorage.getItem(LS_KEY));   
-    $('#searchedCityList').append('<li>');
-    $('#searchedCityList').text(searchHistory).addClass('list-group-item')
-    console.log(searchHistory);
+//ADDS CITY TO LIST BOX <-----THIS FUNCTION NOT WORKING PROPERLY
+function addToCityList() {
+    if (searchHistory) {
+        searchHistory = JSON.parse(localStorage.getItem(LS_KEY));
+        $('#searchedCityList').append(searchHistory.city);
+        console.log(searchHistory);
+    }
 }
 
 // console.log(locationObj);
@@ -164,7 +151,7 @@ async function getWeatherData() {
 }
 
 function getForecastData() {
-    var paramsCurrent = "forecast/daily" + "?key=" + API_KEY + "&units=i&city="+ cityState + "&days=5";
+    var paramsCurrent = "forecast/daily" + "?key=" + API_KEY + "&units=i&city=" + cityState + "&days=5";
     var url = wbEndPt;
     url += paramsCurrent;
     weatherForecast(url);
@@ -194,5 +181,4 @@ function uvColor(uv) {
 $(document).ready(function () {
     setup();
     getWeatherData();
-    addToCityList();
 });
