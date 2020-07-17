@@ -29,30 +29,24 @@ footer {
     padding: 20px;
 }
 
-#search-input {
+#searchBarCity #searchBarState {
     padding: 6px;
-    float:left;
-    position: relative;
-    vertical-align: top;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     width: 80%;
+    margin-left: 5px;
     margin-top: 8px;
     font-size: 17px;
-    border: none;
   }
 
-#search-btn {
-    float: right;
+#searchBtn {
     padding: 6px 10px;
+    margin-left: 5px;
     margin-top: 8px;
-    margin-right: 16px;
-    background: #ddd;
+    margin-bottom: 8px;
     font-size: 17px;
-    border: none;
-    cursor: pointer;
 }
 
-#search-btn:hover {
+#searchBtn:hover {
     background: #ccc;
 }
 

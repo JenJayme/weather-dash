@@ -9,23 +9,11 @@ var today = (moment().format('ddd, MMMM DD, YYYY'));
 
 //========================================================
 
-// const searchBar = document.getElementById("searchBar");
-
 function setup() {
     //event listener for search button
     $("#searchBtn").on("click", function (e) {
-        // debugger;
         e.preventDefault();
         console.log("You clicked a button!");
-
-        //gets user input and saves to an object
-        // var searchInput = {
-        //   city: $("#searchBarCity").val().trim(),
-        //   state: $("#searchBarState").val().trim(),
-        // };
-
-        //pushes location object into searchHistory array
-        // searchHistory.push(searchInput)
         getWeatherData();
     });
 }
@@ -45,22 +33,10 @@ function saveSearchHistory(searchInput) {
     localStorage.setItem(LS_KEY, JSON.stringify(searchHistory));
 }
 
-//reads the search history from local storage
-// function loadFromLocalStorage() {
-//     searchHistory = JSON.parse(localStorage.getItem(LS_KEY));
-// }
-
-function addToCityList () {
-    searchHistory = JSON.parse(localStorage.getItem(LS_KEY));   
-    $('#searchedCityList').append('<li>');
-    $('#searchedCityList').text(searchHistory).addClass('list-group-item')
-    console.log(searchHistory);
-}
-
 // console.log(locationObj);
 
 //========================================================
-//FRED'S REWRITE
+// REWRITE
 // function getUserInputs(searchInput) {
 //     let cityInput = $('#searchBarCity').val() || 'Novato';
 //     let stateInput = $('#searchBarState').val() || 'CA';
@@ -69,7 +45,6 @@ function addToCityList () {
 //     saveSearchHistory(searchInput);
 //     return searchInput;
 // }
-
 
 //========================================================
 
@@ -81,12 +56,6 @@ function addToCityList () {
 const API_KEY = "314f8e60676745089873728b30174cc3";
 const LS_KEY = "sunnyday";
 const wbEndPt = "http://api.weatherbit.io/v2.0/";
-
-// const paramsCurrent = "current" + "?key=" + API_KEY + "&city=" + cityState;
-// const paramsForecast = "forecast/daily" + "?key=" + API_KEY + "&units=i&city=" + cityState + "&days=5";
-// const testURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8e60676745089873728b30174cc3&units=i&city=Novato, CA&days=5";
-// const weatherNowQueryURL = "http://api.weatherbit.io/v2.0/current" + "?key=" + API_KEY + "&city=" + cityState;
-const testIcon = "https://www.weatherbit.io/static/img/icons/c01d.png";
 const iconHub = "https://www.weatherbit.io/static/img/icons/";
 var iconSrc;
 var iconCode;
@@ -120,6 +89,63 @@ function weatherNow(endpturl, loc) {
     });
 }
 
+//====================================================================
+
+async function getWeatherData() {
+    var paramsCurrent = "current" + "?key=" + API_KEY + "&units=i&city=";
+    var url = wbEndPt;
+    cityState = getUserInputs();
+    paramsCurrent += cityState;
+    url += paramsCurrent;
+    await weatherNow(url, cityState);
+    getForecastData();
+}
+
+function getForecastData() {
+    var paramsCurrent = "forecast/daily" + "?key=" + API_KEY + "&units=i&city="+ cityState + "&days=5";
+    var url = wbEndPt;
+    url += paramsCurrent;
+    weatherForecast(url);
+    // const forecastQueryURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8e60676745089873728b30174cc3&units=i&city=Novato, CA&days=5";
+}
+
+//====================================================================
+
+//get search history from local storage and add items to list group
+
+//reads the search history from local storage
+// function loadFromLocalStorage() {
+//     searchHistory = JSON.parse(localStorage.getItem(LS_KEY));
+//     return searchHistory;
+// }
+
+function addToCityList () {
+    searchHistory = JSON.parse(localStorage.getItem(LS_KEY));   
+    $('#searchedCityList').append('<li>');
+    $('#searchedCityList').text(searchHistory).addClass('list-group-item')
+    console.log(searchHistory);
+}
+
+//====================================================================
+
+
+function uvColor(uv) {
+    console.log("uv is " + uv)
+    if (uv < 3) {
+        $('#current-uv').addClass('uv-low') //green
+    } else if (uv > 2 && uv < 6) {
+        $('#current-uv').addClass('uv-mod-lo') //yellow
+    } else if (uv > 5 && uv < 8) {
+        $('#current-uv').addClass('uv-mod-hi') //orange   
+    } else if (uv > 7 && uv < 10) {
+        $('#current-uv').addClass('uv-severe-lo') //red
+    } else if (uv > 9) {
+        $('#current-uv').addClass('uv-severe-hi') //purple
+    } else {
+        $('#current-uv').addClass('uv-low') //green
+    }
+}
+
 //========================================================
 
 function weatherForecast(endpturl) {
@@ -151,48 +177,10 @@ function weatherForecast(endpturl) {
     });
 }
 
-//====================================================================
-
-async function getWeatherData() {
-    var paramsCurrent = "current" + "?key=" + API_KEY + "&units=i&city=";
-    var url = wbEndPt;
-    cityState = getUserInputs();
-    paramsCurrent += cityState;
-    url += paramsCurrent;
-    await weatherNow(url, cityState);
-    getForecastData();
-}
-
-function getForecastData() {
-    var paramsCurrent = "forecast/daily" + "?key=" + API_KEY + "&units=i&city="+ cityState + "&days=5";
-    var url = wbEndPt;
-    url += paramsCurrent;
-    weatherForecast(url);
-    // const forecastQueryURL = "http://api.weatherbit.io/v2.0/forecast/daily?key=314f8e60676745089873728b30174cc3&units=i&city=Novato, CA&days=5";
-}
-//====================================================================
-
-function uvColor(uv) {
-    console.log("uv is " + JSON.stringify(uv));
-    if (uv < 3) {
-        $('#current-uv').addClass('uv-low') //green
-    } else if (uv > 2 && uv < 6) {
-        $('#current-uv').addClass('uv-mod-lo') //yellow
-    } else if (uv > 5 && uv < 8) {
-        $('#current-uv').addClass('uv-mod-hi') //orange   
-    } else if (uv > 7 && uv < 10) {
-        $('#current-uv').addClass('uv-severe-lo') //red
-    } else if (uv > 9) {
-        $('#current-uv').addClass('uv-severe-hi') //purple
-    } else {
-        $('#current-uv').addClass('uv-low') //green
-    }
-}
-
 //========================================================
 
-$(document).ready(function () {
+// $(document).ready(function () {
     setup();
     getWeatherData();
     addToCityList();
-});
+// })

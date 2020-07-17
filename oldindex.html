@@ -33,12 +33,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-
-                <!--FUTURE: INTENDING TO BUILD OUT TABS FOR FAVORITE CITIES-->
-                <!-- <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a> -->
-                <!-- <a class="nav-item nav-link" href="#">FavCity1</a>
-                <a class="nav-item nav-link" href="#">FavCity2</a> -->
-                <!-- <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+                <div id="navTabs">
+                    <!--FUTURE: INTENDING TO BUILD OUT TABS FOR FAVORITE CITIES-->
+                    <!-- <a class="nav-item nav-link active" href="#">Home<span class="sr-only">(current)</span></a> -->
+                    <!-- <a class="nav-item nav-link" href="#">FavCity1</a>
+                        <a class="nav-item nav-link" href="#">FavCity2</a> -->
+                    <!-- <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+                </div>
             </div>
         </div>
     </nav>
@@ -54,24 +55,32 @@
                     <div class="form-group form-row">
                         <div class="form-col">
                             <label class="sr-only" for="searchBarCity">City</label>
-                            <input type="text" class="form-control d-inline-flex mr-sm-1" id="searchBarCity"
+                            <input type="text" class="form-control mr-sm-1" id="searchBarCity"
                                 placeholder="Search for City">
                         </div>
                         <div class="form-col">
                             <label class="sr-only" for="searchBarState">State</label>
-                            <input type="text" class="form-control d-inline-flex" id="searchBarState"
-                                placeholder="State">
+                            <input type="text" class="form-control" id="searchBarState" placeholder="State">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <button type="submit" id="searchBtn" class="btn btn-primary mb-3">Search</button>
                         </div>
                         <div class="form-col">
-                            <button type="submit" id="searchBtn"
-                                class="btn btn-primary d-inline-flex">Search</button>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="checkbox" id="remember-check">
+                                <label class="form-check-label" for="rememberCheck">
+                                    Remember me
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </form>
 
                 <!--REMEMBERED CITIES LISTBOX-->
                 <div>
-                    <ul id="searched-city-list" class="list-group" style="width: 95%">
+                    <ul id="searchedCityList" class="list-group" style="width: 95%">
                         <li class="list-group-item">Novato, CA</li>
                         <li class="list-group-item">San Francisco, CA</li>
                         <li class="list-group-item">Denver, CO</li>
@@ -125,7 +134,7 @@
                         <h4 class="bkg-blue">5-Day Forecast</h4>
                     </div>
                 </div>
-                <div class="row pt-3" id="forecastDiv">
+                <div class="row pt-3" id="forecast-div">
                 </div>
             </div>
         </div>
