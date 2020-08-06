@@ -1,5 +1,5 @@
 body {
-    background-color: #E4DFDA;
+    background-color: rgb(32, 101, 221);
 }
 
 button {
@@ -7,11 +7,15 @@ button {
     float: right;
 }
 
+.card {
+    background-color: rgba(255, 255, 255, .4);
+}
+
 footer {
     display: block;
     text-align: center;
     color:whitesmoke;
-    background: rgb(6, 58, 58);
+    background: #13397a;
     opacity: 50%;
     padding: 15px;
     border-top-style: solid;
@@ -20,7 +24,7 @@ footer {
   }
 
 #banner-img {
-    background-color: #4281A4;
+    background-color: #1c57bd;
     /* background-image: url("assets/sunflowers.jpg"); */
     height: 70px;
     width: 85%;
@@ -61,7 +65,7 @@ footer {
 }
 
 .bkg-blue {
-    background-color: #4281A4;
+    background-color:#1c57bd;
     color: white;
     padding: 10px;
     margin-top: 10px;
@@ -78,11 +82,12 @@ footer {
 }
 
 .navbar {
-    background-color: #c71585;
+    background-color: #13397a;
 }
 
 .navbar-brand {
     padding: 5px;
+    text-align: center;
     font-size: 32px;
 }
 
